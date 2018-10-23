@@ -22,6 +22,7 @@ import android.example.com.squawker.following.FollowingPreferenceActivity;
 import android.example.com.squawker.provider.SquawkContract;
 import android.example.com.squawker.provider.SquawkProvider;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
@@ -34,6 +35,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.InstanceIdResult;
 
 public class MainActivity extends AppCompatActivity implements
         LoaderManager.LoaderCallbacks<Cursor> {
@@ -101,7 +108,18 @@ public class MainActivity extends AppCompatActivity implements
             // the new token.
         // TODO (3) Here, in MainActivity, get a token using FirebaseInstanceId.getInstance().getToken()
         // TODO (4) Get the message from that token and print it in a log statement
-
+        //Log.e("Main","FCM Token "+FirebaseInstanceId.getInstance().getToken());
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(new OnCompleteListener<InstanceIdResult>() {
+            @Override
+            public void onComplete(@NonNull Task<InstanceIdResult> task) {
+                // Get new Instance ID token
+                String token = task.getResult().getToken();
+    
+                // Log and toast
+                Log.d("Main Activity", token);
+                Toast.makeText(MainActivity.this, token, Toast.LENGTH_SHORT).show();
+            }
+        });
 
     }
 
