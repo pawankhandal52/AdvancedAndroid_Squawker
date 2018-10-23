@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private static String LOG_TAG = MainActivity.class.getSimpleName();
     private static final int LOADER_ID_MESSAGES = 0;
-
+    
     RecyclerView mRecyclerView;
     LinearLayoutManager mLayoutManager;
     SquawkAdapter mAdapter;
@@ -88,6 +88,10 @@ public class MainActivity extends AppCompatActivity implements
 
         // TODO (1) Get the test data here from the extras bundle that came with this intent.
         // To confirm that the data was passed in, make sure to show the data in a log statement.
+        Bundle bundle = getIntent().getExtras();
+        if (bundle !=null && bundle.containsKey("test")){
+            Log.d("Main", "onCreate: "+bundle.getString("test"));
+        }
 
     }
 
